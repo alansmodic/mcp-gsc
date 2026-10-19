@@ -148,6 +148,10 @@ class TokenGateTests(unittest.TestCase):
     def test_health_is_open(self):
         self.assertEqual(self.client.get("/health").status_code, 200)
 
+    def test_oauth_discovery_is_404_not_401(self):
+        self.assertEqual(self.client.get("/.well-known/oauth-protected-resource").status_code, 404)
+        self.assertEqual(self.client.get("/.well-known/oauth-authorization-server").status_code, 404)
+
     def test_rejects_missing_or_wrong_token(self):
         self.assertEqual(self.mcp_post("/mcp").status_code, 401)
         self.assertEqual(self.mcp_post("/mcp", {"Authorization": "Bearer nope"}).status_code, 401)

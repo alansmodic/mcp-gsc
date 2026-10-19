@@ -212,6 +212,10 @@ class TokenGate:
         path = scope["path"]
         if path == "/health":
             return await _respond(send, 200, {"status": "ok"})
+        # Clients probing for OAuth metadata (e.g. Grok Bot, ChatGPT) should see
+        # "no OAuth here" rather than a 401 that implies an OAuth flow exists.
+        if path.startswith("/.well-known/"):
+            return await _respond(send, 404, {"error": "not_found"})
 
         if self.allow_url_token:
             first, sep, rest = path.lstrip("/").partition("/")
