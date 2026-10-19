@@ -278,7 +278,7 @@ def main():
     app = build_app()
     uvicorn.run(
         app,
-        host=os.environ.get("HOST", "::"),
+        host=os.environ.get("HOST", "0.0.0.0"),
         port=int(os.environ.get("PORT", "8080")),
         proxy_headers=True,
         forwarded_allow_ips="*",
