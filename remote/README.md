@@ -2,14 +2,14 @@
 
 This fork adds a hosted, read-only, multi-account mode on top of upstream
 [AminForou/mcp-gsc](https://github.com/AminForou/mcp-gsc). Upstream's
-`gsc_server.py` is untouched; everything here lives in `remote/`, `railway.json`
-and `.github/workflows/sync-upstream.yml`, so upstream releases merge cleanly.
+`gsc_server.py` is untouched; everything here lives in `remote/` and
+`.github/workflows/sync-upstream.yml`, so upstream releases merge cleanly.
 
 | Piece | What it does |
 |---|---|
 | `remote/server.py` | Loads one Google login per account, routes each call to the account that can see the property, drops write tools, serves Streamable HTTP behind a shared secret |
 | `remote/login.py` | Run locally once per Google account to create a read-only login |
-| `remote/Dockerfile` + `railway.json` | Railway build/deploy config (health check at `/health`) |
+| `remote/Dockerfile` | Railway image. Service settings live in Railway, not the repo: Dockerfile path `remote/Dockerfile` (also `RAILWAY_DOCKERFILE_PATH`), health check `/health` |
 | `sync-upstream.yml` | Daily: merge upstream, run all tests, push to `main` only if green (Railway redeploys); opens an issue on failure |
 
 ## 1. Google Cloud (once)

@@ -26,7 +26,6 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 import gsc_server  # noqa: E402
-from google.auth.transport.requests import Request  # noqa: E402
 from google.oauth2.credentials import Credentials  # noqa: E402
 from googleapiclient.discovery import build  # noqa: E402
 
